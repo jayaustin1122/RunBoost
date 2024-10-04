@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.athlitecsapp.R
 import com.example.athlitecsapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -30,7 +32,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-
+        binding.apply {
+            card1.setOnClickListener {
+                findNavController().navigate(R.id.listOFRoutinesFragment)
+            }
+        }
     }
 
     override fun onDestroyView() {

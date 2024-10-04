@@ -42,4 +42,14 @@
         android:name="com.example.athlitecsapp.ui.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/listOFRoutinesFragment"
+        android:name="com.example.athlitecsapp.ui.home.ListOFRoutinesFragment"
+        android:label="fragment_list_o_f_routines"
+        tools:layout="@layout/fragment_list_o_f_routines" />
+    <fragment
+        android:id="@+id/onBoardingFourFragment"
+        android:name="com.example.athlitecsapp.ui.onboardings.OnBoardingFourFragment"
+        android:label="fragment_on_boarding_four"
+        tools:layout="@layout/fragment_on_boarding_four" />
 </navigation>
