@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".ui.onboardings.OnBoardingOneFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:paddingHorizontal="20dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/text_primary"
+        android:textSize="25sp"
+        android:text="WELCOME TO\n RUNBOOST" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@drawable/onboardingone"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:text="We can help you to be a better version of yourself." />
+</LinearLayout>

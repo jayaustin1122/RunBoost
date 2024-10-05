@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation ("nl.joery.animatedbottombar:library:1.1.0")
     val roomVersion = "2.6.0"
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
@@ -57,4 +58,5 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+
 }

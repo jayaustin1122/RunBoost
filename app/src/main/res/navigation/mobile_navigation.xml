@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/signUpFragment">
+    app:startDestination="@+id/splashFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -31,7 +31,7 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.athlitecsapp.ui.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.athlitecsapp.ui.ForgotPasswordFragment"
@@ -52,4 +52,14 @@
         android:name="com.example.athlitecsapp.ui.onboardings.OnBoardingFourFragment"
         android:label="fragment_on_boarding_four"
         tools:layout="@layout/fragment_on_boarding_four" />
+    <fragment
+        android:id="@+id/holderFragment"
+        android:name="com.example.athlitecsapp.ui.HolderFragment"
+        android:label="fragment_holder"
+        tools:layout="@layout/fragment_holder" />
+    <fragment
+        tools:layout="@layout/fragment_onboarding_main"
+        android:id="@+id/onBoardingMainFragment"
+        android:name="com.example.athlitecsapp.ui.onboardings.OnBoardingMainFragment"
+        android:label="OnBoardingMainFragment" />
 </navigation>
