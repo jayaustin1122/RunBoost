@@ -1,6 +1,5 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
@@ -50,15 +49,14 @@
 
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/workout_image"
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/workout_video"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:scaleType="centerInside"
-            android:visibility="gone" />
-
+            android:visibility="gone"
+            android:elevation="2dp"
+            android:background="@android:color/black" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
