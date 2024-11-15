@@ -4,18 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.athlitecsapp.dao.RoutineDao
 import com.example.athlitecsapp.dao.StatusDao
 import com.example.athlitecsapp.dao.UserDao
+import com.example.athlitecsapp.model.Routine
 import com.example.athlitecsapp.table.Status
 import com.example.athlitecsapp.table.User
 
 @Database(
-    entities = [User::class, Status::class],
-    version = 1
+    entities = [User::class, Status::class,Routine::class],
+    version = 2
 )
 abstract class RunBoostDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
+    abstract fun getRoutine(): RoutineDao
 
     abstract fun getStatus(): StatusDao
 

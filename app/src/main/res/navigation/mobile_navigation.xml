@@ -62,4 +62,12 @@
         android:id="@+id/onBoardingMainFragment"
         android:name="com.example.athlitecsapp.ui.onboardings.OnBoardingMainFragment"
         android:label="OnBoardingMainFragment" />
+    <fragment
+        android:id="@+id/categoriesListsFragment"
+        android:name="com.example.athlitecsapp.ui.home.CategoriesListsFragment"
+        android:label="CategoriesListsFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.athlitecsapp.ui.home.DetailsFragment"
+        android:label="DetailsFragment" />
 </navigation>

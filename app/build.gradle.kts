@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.athlitecsapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.athlitecsapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,9 +41,10 @@ android {
 
 dependencies {
     implementation ("nl.joery.animatedbottombar:library:1.1.0")
-    val roomVersion = "2.6.0"
-    implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation ("androidx.room:room-runtime:2.5.0")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -58,8 +59,30 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer:2.18.1")
     implementation ("com.google.android.exoplayer:exoplayer-core:2.17.1")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.17.1")
-
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+    //karumi to access other component of mobile
+    implementation ("com.karumi:dexter:6.2.2")
+    implementation ("com.itextpdf:kernel:7.1.15")
+    implementation ("com.itextpdf:layout:7.1.15")
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    kapt ("com.github.bumptech.glide:compiler:4.14.2")
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    //Retrofit
+    implementation ("com.squareup.retrofit2:converter-gson:2.6.0")
+    implementation ("pub.devrel:easypermissions:3.0.0")
+    implementation( "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+    implementation ("com.squareup.picasso:picasso:2.8")
+    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("nl.joery.animatedbottombar:library:1.1.0")
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
 
 }
