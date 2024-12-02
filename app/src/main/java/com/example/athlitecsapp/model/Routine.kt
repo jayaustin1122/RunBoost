@@ -9,8 +9,8 @@ data class Routine(
     val title: String,
     val description: String,
     val category: String,
-    val video: Int,
-    val image: Int,
+    val video: Int? = null ,
+    val image: Int? = null ,
     var open : Boolean = false
 
 )

@@ -35,7 +35,13 @@ class SplashFragment : Fragment() {
 
         Handler().postDelayed({
             if (onBoardingFinished()) {
-                findNavController().navigate(R.id.signInFragment)
+                if (login()){
+                    findNavController().navigate(R.id.holderFragment)
+                }
+                else{
+                    findNavController().navigate(R.id.signInFragment)
+                }
+
             } else {
                 findNavController().navigate(R.id.onBoardingMainFragment)
             }
@@ -43,6 +49,10 @@ class SplashFragment : Fragment() {
     }
     private fun onBoardingFinished(): Boolean {
         val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("Finished", false)
+    }
+    private fun login(): Boolean {
+        val sharedPref = requireActivity().getSharedPreferences("login", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("Finished", false)
     }
 }

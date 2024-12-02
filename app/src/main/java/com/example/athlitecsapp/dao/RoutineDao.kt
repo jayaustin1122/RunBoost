@@ -10,12 +10,17 @@ import com.example.athlitecsapp.model.Routine
 interface RoutineDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTinikling(tinikling: List<Routine>)
+    suspend fun insertRoutine(routine: List<Routine>)
 
     @Query("SELECT * FROM routine WHERE category = :category")
-    suspend fun getTiniklingByCategory(category: String): List<Routine>
+    suspend fun getRoutineByCategory(category: String): List<Routine>
     @Query("SELECT * FROM routine")
-    suspend fun getAllTinikling(): List<Routine>
-    @Query("SELECT * FROM routine WHERE video IS NOT NULL")
-    suspend fun getTiniklingWithVideo(): List<Routine>
+    suspend fun getAllRoutines(): List<Routine>
+    @Query("SELECT * FROM routine")
+    suspend fun getRoutineWithVideo(): List<Routine>
+
+    @Query("SELECT * FROM routine WHERE id = :id")
+    suspend fun getRoutineById(id: Int): Routine
+
+
 }
