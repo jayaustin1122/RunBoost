@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/dashboard"
         android:name="com.example.athlitecsapp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
@@ -42,11 +42,7 @@
         android:name="com.example.athlitecsapp.ui.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
-    <fragment
-        android:id="@+id/listOFRoutinesFragment"
-        android:name="com.example.athlitecsapp.ui.home.ListOFRoutinesFragment"
-        android:label="fragment_list_o_f_routines"
-        tools:layout="@layout/fragment_list_o_f_routines" />
+
     <fragment
         android:id="@+id/onBoardingFourFragment"
         android:name="com.example.athlitecsapp.ui.onboardings.OnBoardingFourFragment"
@@ -70,4 +66,84 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.athlitecsapp.ui.home.DetailsFragment"
         android:label="DetailsFragment" />
+    <fragment
+        android:id="@+id/listOf100Fragment"
+        android:name="com.example.athlitecsapp.ui.home.onehundred.ListOf100Fragment"
+        android:label="ListOf100Fragment" />
+    <fragment
+        android:id="@+id/take100Fragment"
+        android:name="com.example.athlitecsapp.ui.home.onehundred.Take100Fragment"
+        android:label="fragment_take100"
+        tools:layout="@layout/fragment_take100" />
+    <fragment
+        android:id="@+id/eightHundredFragment"
+        android:name="com.example.athlitecsapp.ui.home.eightHundred.EightHundredFragment"
+        android:label="EightHundredFragment" />
+    <fragment
+        android:id="@+id/eightListsFragment"
+        android:name="com.example.athlitecsapp.ui.home.eightHundred.EightListsFragment"
+        android:label="fragment_eight_lists"
+        tools:layout="@layout/fragment_eight_lists" />
+    <fragment
+        android:id="@+id/takeThreeHundredFragment"
+        android:name="com.example.athlitecsapp.ui.home.threeHundred.TakeThreeHundredFragment"
+        android:label="TakeThreeHundredFragment" />
+    <fragment
+        android:id="@+id/threeHundredListsFragment"
+        android:name="com.example.athlitecsapp.ui.home.threeHundred.ThreeHundredListsFragment"
+        android:label="ThreeHundredListsFragment" />
+    <fragment
+        android:id="@+id/listsTakeFiveKFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.fiveK.ListsTakeFiveKFragment"
+        android:label="fragment_lists_take_five_k"
+        tools:layout="@layout/fragment_lists_take_five_k" />
+    <fragment
+        android:id="@+id/takeFiveKFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.fiveK.TakeFiveKFragment"
+        android:label="fragment_take_five_k"
+        tools:layout="@layout/fragment_take_five_k" />
+    <fragment
+        android:id="@+id/takeTwoHundredFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.twoHundredFocus.TakeTwoHundredFragment"
+        android:label="fragment_take_two_hundred"
+        tools:layout="@layout/fragment_take_two_hundred" />
+    <fragment
+        android:id="@+id/listsTwoHundredFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.twoHundredFocus.ListsTwoHundredFragment"
+        android:label="fragment_lists_two_hundred"
+        tools:layout="@layout/fragment_lists_two_hundred" />
+    <fragment
+        android:id="@+id/takeFourHundredFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.fourHundredFocus.TakeFourHundredFragment"
+        android:label="TakeFourHundredFragment" />
+    <fragment
+        android:id="@+id/listsFourHundredFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.fourHundredFocus.ListsFourHundredFragment"
+        android:label="fragment_lists_four_hundred"
+        tools:layout="@layout/fragment_lists_four_hundred" />
+    <fragment
+        android:id="@+id/listsOneFiveFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.oneFiveFocus.ListsOneFiveFragment"
+        android:label="fragment_lists_one_five"
+        tools:layout="@layout/fragment_lists_one_five" />
+    <fragment
+        android:id="@+id/takeOneFiveFragment"
+        android:name="com.example.athlitecsapp.ui.dashboard.oneFiveFocus.TakeOneFiveFragment"
+        android:label="fragment_take_one_five"
+        tools:layout="@layout/fragment_take_one_five" />
+    <dialog
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.athlitecsapp.ui.note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
+    <fragment
+        android:id="@+id/noteTakerFragment"
+        android:name="com.example.athlitecsapp.ui.note.NoteTakerFragment"
+        android:label="fragment_note_taker"
+        tools:layout="@layout/fragment_note_taker" />
+    <fragment
+        android:id="@+id/timeTrialFragment"
+        android:name="com.example.athlitecsapp.ui.note.TimeTrialFragment"
+        android:label="TimeTrialFragment" />
+
 </navigation>

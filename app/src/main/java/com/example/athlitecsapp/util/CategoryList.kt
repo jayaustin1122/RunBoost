@@ -5,13 +5,9 @@ import com.example.athlitecsapp.model.Category
 
 object CategoryList {
     val categories = listOf(
-        Category("Stretching", R.drawable.strething),
-        Category("Jogging", R.drawable.jogging),
-        Category("Warm-Up", R.drawable.warm),
-        Category("Running Drills", R.drawable.running),
-        Category("Workout", R.drawable.workouts),
-        Category("Abdominal", R.drawable.abdominal),
-        Category("Arm", R.drawable.arm),
-        Category("Cooldown", R.drawable.cooldown),
+        Category("Running Drills", R.drawable.running),//done
+        Category("Arm", R.drawable.arm),//done
+        Category("Abdominal", R.drawable.abdominal),//done
+        Category("Cooldown", R.drawable.cooldown),//done
     )
 }

@@ -5,16 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.athlitecsapp.R
 import com.example.athlitecsapp.adapter.RoutineAdapter
 import com.example.athlitecsapp.databinding.FragmentCategoriesListsBinding
 import com.example.athlitecsapp.util.FragmentNavigationUtils
-
+import com.example.athlitecsapp.util.HomeFactory
+import com.example.athlitecsapp.viewmodels.HomeViewModel
 
 
 class CategoriesListsFragment : Fragment() {
@@ -32,9 +31,9 @@ class CategoriesListsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryTitle = arguments?.getString("category_title") ?: "Default Title"
-        binding.textViewCategoryTitle.text = categoryTitle
+        binding.textViewCategoryTitle.text = categoryTitle.capitalize()
 
-        viewModel.getTiniklingByCategory(categoryTitle) { tiniklingList ->
+        viewModel.getRoutineByCategory(categoryTitle) { tiniklingList ->
             if (tiniklingList.isEmpty()) {
                 // Show the "no data" image and hide RecyclerView
                 binding.recyclerViewTiniklingList.visibility = View.GONE

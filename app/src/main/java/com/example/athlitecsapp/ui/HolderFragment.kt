@@ -12,17 +12,20 @@ import com.example.athlitecsapp.R
 import com.example.athlitecsapp.databinding.FragmentHolderBinding
 import com.example.athlitecsapp.ui.dashboard.DashboardFragment
 import com.example.athlitecsapp.ui.home.HomeFragment
+import com.example.athlitecsapp.ui.note.NoteTakerFragment
 import com.example.athlitecsapp.ui.notifications.NotificationsFragment
+import com.example.athlitecsapp.viewmodels.SharedViewModel
 import nl.joery.animatedbottombar.AnimatedBottomBar
-
 class HolderFragment : Fragment() {
     private var _binding: FragmentHolderBinding? = null
     private val binding get() = _binding!!
 
-    // Fragment instances to cache them
     private val homeFragment = HomeFragment()
-    private val dashboardFragment = DashboardFragment()
+    private val dashboardFragment = NoteTakerFragment()
     private val notificationsFragment = NotificationsFragment()
+
+    // Use the SharedViewModel
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +38,16 @@ class HolderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize the ViewModel
+        sharedViewModel = requireActivity().run {
+            androidx.lifecycle.ViewModelProvider(this)[SharedViewModel::class.java]
+        }
+
+        // Observe the last selected index and update the tab accordingly
+        sharedViewModel.lastSelectedIndex.observe(viewLifecycleOwner) { index ->
+            binding.navView.selectTabAt(index, true)
+        }
+
         // Set the initial fragment
         setCurrentFragment(homeFragment)
 
@@ -46,7 +59,8 @@ class HolderFragment : Fragment() {
                 newIndex: Int,
                 newTab: AnimatedBottomBar.Tab
             ) {
-                Log.d("bottom_bar", "Selected index: $newIndex, title: ${newTab.title}")
+                // Update the selected tab index in the ViewModel
+                sharedViewModel.setLastSelectedIndex(newIndex)
 
                 // Switch between fragments based on the selected tab
                 when (newIndex) {
@@ -57,17 +71,15 @@ class HolderFragment : Fragment() {
             }
 
             override fun onTabReselected(index: Int, tab: AnimatedBottomBar.Tab) {
-                Log.d("bottom_bar", "Reselected index: $index, title: ${tab.title}")
                 // Handle reselection if needed
             }
         })
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
-        // Check if the fragment is already added, if not, add it; otherwise, show it
         childFragmentManager.commit {
             childFragmentManager.fragments.forEach {
-                hide(it) // Hide all fragments before showing the new one
+                hide(it)
             }
 
             if (!fragment.isAdded) {

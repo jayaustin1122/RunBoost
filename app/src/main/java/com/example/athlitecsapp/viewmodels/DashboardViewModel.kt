@@ -1,4 +1,4 @@
-package com.example.athlitecsapp.ui.dashboard
+package com.example.athlitecsapp.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

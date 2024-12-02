@@ -8,14 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.athlitecsapp.R
 import com.example.athlitecsapp.adapter.OnBoardingAdapter
 import com.example.athlitecsapp.databinding.FragmentOnboardingMainBinding
+import com.example.athlitecsapp.util.DialogUtils
 import com.google.android.material.tabs.TabLayoutMediator
 
 class OnBoardingMainFragment : Fragment() {
     private lateinit var binding: FragmentOnboardingMainBinding
-    private lateinit var progressDialog : ProgressDialog
+    private lateinit var loadingDialog: SweetAlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,9 +28,7 @@ class OnBoardingMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog = ProgressDialog(this.requireContext())
-        progressDialog.setTitle("Please wait")
-        progressDialog.setCanceledOnTouchOutside(false)
+
         val fragmentList = arrayListOf<Fragment>(
             OnBoardingOneFragment(),
             OnBoardingTwoFragment(),
@@ -48,7 +48,10 @@ class OnBoardingMainFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
 
         binding.btnSkip.setOnClickListener {
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
             findNavController().navigate(R.id.signInFragment)
+            onBoardingFinish()
         }
 
         // Handle Next button click
@@ -57,6 +60,8 @@ class OnBoardingMainFragment : Fragment() {
             if (currentItem < fragmentList.size - 1) {
                 binding.viewPager.currentItem = currentItem + 1
             } else {
+                loadingDialog = DialogUtils.showLoading(requireActivity())
+                loadingDialog.show()
                 // If on the last page, you can navigate to another screen
                 findNavController().navigate(R.id.signInFragment)
                 onBoardingFinish()
@@ -64,15 +69,13 @@ class OnBoardingMainFragment : Fragment() {
         }
     }
     private fun onBoardingFinish(){
-        progressDialog.setMessage("Processing...")
-        progressDialog.show()
         view?.postDelayed({
             val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
             val editor = sharedPref.edit()
             editor.putBoolean("Finished", true)
             editor.apply()
 
-            progressDialog.dismiss()
+            loadingDialog.dismiss()
         }, 2000)
     }
 }

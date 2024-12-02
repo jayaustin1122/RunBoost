@@ -14,7 +14,6 @@ object FragmentNavigationUtils {
         val navOptions = NavOptions.Builder()
             .setEnterAnim(R.anim.slide_in_right)  // Enter animation for new fragment
             .setExitAnim(R.anim.slide_out_left)   // Exit animation for current fragment
-            .setPopEnterAnim(R.anim.slide_in_left)  // Enter animation when back is pressed
             .setPopExitAnim(R.anim.slide_out_right) // Exit animation when back is pressed
             .build()
 

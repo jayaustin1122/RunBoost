@@ -4,18 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
     tools:context=".ui.SignUpFragment">
     <!-- Welcome text -->
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="335dp"
+        android:layout_height="177dp"
         android:layout_marginTop="64dp"
         android:src="@drawable/create_acc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,9 +48,8 @@
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:drawableStart="@drawable/baseline_email_24"
-            android:hint="Email"
+            android:hint="Username"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,12 +73,11 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_lock_24"
             android:hint="Password"
-            android:background="@color/white"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Login Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -90,6 +86,7 @@
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/btn_bg"
         android:text="Create account"
+        android:fontFamily="@font/bold"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +99,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="Alrady have an account? Signin"
+        android:text="Already have an account? Sign in"
         android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
