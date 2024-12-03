@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -76,38 +77,35 @@ class NotificationsFragment : Fragment() {
                 val progress6 = status.level6DayProgress
                 val progress7 = status.level7DayProgress
 
-                // Scaling progress to a percentage (assuming max is 30)
-                val scaledProgress1 = if (progress1 == 1) 0 else (progress1 * 100) / 30
-                val scaledProgress2 = if (progress2 == 1) 0 else (progress2 * 100) / 30
-                val scaledProgress3 = if (progress3 == 1) 0 else (progress3 * 100) / 30
-                val scaledProgress4 = if (progress4 == 1) 0 else (progress4 * 100) / 30
-                val scaledProgress5 = if (progress5 == 1) 0 else (progress5 * 100) / 30
-                val scaledProgress6 = if (progress6 == 1) 0 else (progress6 * 100) / 30
-                val scaledProgress7 = if (progress7 == 1) 0 else (progress7 * 100) / 30
+                // Function to handle progress update and completion state
+                fun updateProgress(
+                    progress: Int,
+                    progressBar: ProgressBar,
+                    progressLabel: TextView
+                ) {
+                    if (progress == 31) {
+                        // If progress is 31, show finished and 100%
+                        progressBar.progress = 100
+                        progressLabel.text = "Finished"
+                    } else {
+                        // Otherwise, scale the progress
+                        val scaledProgress = if (progress == 1) 0 else (progress * 100) / 30
+                        progressBar.progress = scaledProgress
+                        progressLabel.text = "$scaledProgress%"
+                    }
+                }
 
-                // Binding values to UI components
-                binding.progress100m.progress = scaledProgress1
-                binding.progress100mLabel.text = "$scaledProgress1%"
-
-                binding.progress800m.progress = scaledProgress2
-                binding.progress800mLabel.text = "$scaledProgress2%"
-
-                binding.progress3000m.progress = scaledProgress3
-                binding.progress3000mLabel.text = "$scaledProgress3%"
-
-                binding.progress5k.progress = scaledProgress4
-                binding.progress5kLabel.text = "$scaledProgress4%"
-
-                binding.progress200m.progress = scaledProgress5
-                binding.progress200mLabel.text = "$scaledProgress5%"
-
-                binding.progress400m.progress = scaledProgress6
-                binding.progress400mLabel.text = "$scaledProgress6%"
-
-                binding.progress1500m.progress = scaledProgress7
-                binding.progress1500mLabel.text = "$scaledProgress7%"
+                // Update progress for all levels
+                updateProgress(progress1, binding.progress100m, binding.progress100mLabel)
+                updateProgress(progress2, binding.progress800m, binding.progress800mLabel)
+                updateProgress(progress3, binding.progress3000m, binding.progress3000mLabel)
+                updateProgress(progress4, binding.progress5k, binding.progress5kLabel)
+                updateProgress(progress5, binding.progress200m, binding.progress200mLabel)
+                updateProgress(progress6, binding.progress400m, binding.progress400mLabel)
+                updateProgress(progress7, binding.progress1500m, binding.progress1500mLabel)
             }
         }
+
         binding.btnLogout.setOnClickListener {
             showLogoutDialog()
         }

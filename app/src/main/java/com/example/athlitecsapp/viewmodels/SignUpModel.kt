@@ -42,38 +42,39 @@ class SignUpModel(context: Context) : ViewModel() {
             }
         }
     }
-    fun updateLevel1(id: Int, level1: Int, level1DayProgress: Int) {
+    fun updateLevel1(level1DayProgress: Int) {
         viewModelScope.launch {
             try {
-                statusDao.updateLevel1AndProgress(id, level1, level1DayProgress)
-                Log.d("UpdateStatus", "Successfully updated level1 and level1DayProgress for id: $id")
+                statusDao.updateLevel1DayProgressForAll(level1DayProgress)
+                Log.d("UpdateStatus", "Successfully updated level4DayProgressForAll")
             } catch (e: Exception) {
-                Log.e("UpdateStatus", "Failed to update level1 and level1DayProgress for id: $id", e)
+                Log.e("UpdateStatus", "Failed to update level4DayProgressForAll", e)
             }
         }
     }
 
-    fun updateLevel2(id: Int, level2: Int, level2DayProgress: Int) {
+    fun updateLevel2(level2DayProgress: Int) {
         viewModelScope.launch {
             try {
-                statusDao.updateLevel2AndProgress(id, level2, level2DayProgress)
-                Log.d("UpdateStatus", "Successfully updated level2 and level2DayProgress for id: $id")
+                statusDao.updateLevel2DayProgressForAll(level2DayProgress)
+                Log.d("UpdateStatus", "Successfully updated level4DayProgressForAll")
             } catch (e: Exception) {
-                Log.e("UpdateStatus", "Failed to update level2 and level2DayProgress for id: $id", e)
+                Log.e("UpdateStatus", "Failed to update level4DayProgressForAll", e)
             }
         }
     }
 
-    fun updateLevel3(id: Int, level3: Int, level3DayProgress: Int) {
+    fun updateLevel3(level3DayProgress: Int) {
         viewModelScope.launch {
             try {
-                statusDao.updateLevel3AndProgress(id, level3, level3DayProgress)
-                Log.d("UpdateStatus", "Successfully updated level3 and level3DayProgress for id: $id")
+                statusDao.updateLevel3DayProgressForAll(level3DayProgress)
+                Log.d("UpdateStatus", "Successfully updated level4DayProgressForAll")
             } catch (e: Exception) {
-                Log.e("UpdateStatus", "Failed to update level3 and level3DayProgress for id: $id", e)
+                Log.e("UpdateStatus", "Failed to update level4DayProgressForAll", e)
             }
         }
     }
+
 
     fun updateLevel4(level4DayProgress: Int) {
         viewModelScope.launch {

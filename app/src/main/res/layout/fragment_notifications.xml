@@ -302,6 +302,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
                     android:id="@+id/btnLogout"
+                    android:backgroundTint="@color/btn_bg"
                     android:layout_height="wrap_content"
                     android:text="Log out"/>
             </LinearLayout>

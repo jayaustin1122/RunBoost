@@ -43,7 +43,15 @@ class TakeOneFiveFragment : Fragment() {
                 Log.d("ListOf100Fragment", "Status received: $status")
                 val progress = status.level7DayProgress
                 binding.workoutProgressBar.progress = progress
-                binding.dayDisplay.text = "Day: $progress"
+                if (progress >= 31){
+                    binding.workoutProgressBar.progress = 100
+                    binding.dayDisplay.text = "Finished"
+                }
+                else{
+                    val scaledProgress1 = if (progress == 1) 0 else (progress * 100) / 30
+                    binding.dayDisplay.text = "Day ${progress}"
+                    binding.workoutProgressBar.progress = scaledProgress1
+                }
                 val (level, day) = when (progress) {
                     in 0..10 -> "BEGINNER" to progress
                     in 11..20 -> "INTERMEDIATE" to progress
@@ -72,12 +80,13 @@ class TakeOneFiveFragment : Fragment() {
                                 "BundleContent",
                                 "Day: ${bundle.getInt("day")}, Level: ${bundle.getString("level")}"
                             )
-
-                            // Navigate to take100Fragment
-                            findNavController().navigate(R.id.listsOneFiveFragment, bundle)
-
-                            // Dismiss the dialog after confirming
-                            it.dismissWithAnimation()
+                            if(status.level7DayProgress >= 31){
+                                DialogUtils.showSuccessMessage(requireActivity(),"You Have Completed All The Activities","Congratulations")
+                            }
+                            else{
+                                findNavController().navigate(R.id.listsOneFiveFragment, bundle)
+                                it.dismissWithAnimation()
+                            }
                         }
                     ).setCancelText("No")
                         .setCancelClickListener { dialog ->

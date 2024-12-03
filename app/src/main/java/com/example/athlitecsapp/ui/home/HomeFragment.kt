@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -101,26 +103,34 @@ class HomeFragment : Fragment() {
         }
         sviewModel.statusLiveData.observe(viewLifecycleOwner) { status ->
             if (status != null) {
-                val progress = status.level1DayProgress
+                // Progress for levels 1 to 7
+                val progress1 = status.level1DayProgress
                 val progress2 = status.level2DayProgress
                 val progress3 = status.level3DayProgress
-                val scaledProgress = if (progress == 1) 0 else (progress * 100) / 30
-                val scaledProgress2 = if (progress2 == 1) 0 else (progress2 * 100) / 30
-                val scaledProgress3 = if (progress3 == 1) 0 else (progress3 * 100) / 30
 
-                binding.progress1.progress = scaledProgress
-                binding.day.text = "Day: $progress"
-                binding.progresstxt1.text = "$scaledProgress%"
+                // Function to handle scaling and display logic
+                fun setProgress(progress: Int, progressBar: ProgressBar, dayText: TextView, progressText: TextView) {
+                    if (progress == 31) {
+                        // If progress is 31, show finished and 100%
+                        progressBar.progress = 100
+                        dayText.text = "Finished"
+                        progressText.text = "100%"
+                    } else {
+                        // Otherwise, scale progress and display normally
+                        val scaledProgress = if (progress == 1) 0 else (progress * 100) / 30
+                        progressBar.progress = scaledProgress
+                        dayText.text = "Day: $progress"
+                        progressText.text = "$scaledProgress%"
+                    }
+                }
 
-                binding.progress2.progress = scaledProgress2
-                binding.day2.text = "Day: $progress2"
-                binding.progress2txt.text = "$scaledProgress2%"
-
-                binding.progress3.progress = scaledProgress3
-                binding.day3.text = "Day: $progress3"
-                binding.progress3txt.text = "$scaledProgress3%"
+                // Apply the function to all progress levels
+                setProgress(progress1, binding.progress1, binding.day, binding.progresstxt1)
+                setProgress(progress2, binding.progress2, binding.day2, binding.progress2txt)
+                setProgress(progress3, binding.progress3, binding.day3, binding.progress3txt)
             }
         }
+
 
         binding.card800.setOnClickListener {
             loadingDialog = DialogUtils.showLoading(requireActivity())

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,45 +63,38 @@ class DashboardFragment : Fragment() {
                 val progress6 = status.level6DayProgress
                 val progress7 = status.level7DayProgress
 
-                // Scaling progress to a percentage (assuming max is 30)
-                val scaledProgress1 = if (progress1 == 1) 0 else (progress1 * 100) / 30
-                val scaledProgress2 = if (progress2 == 1) 0 else (progress2 * 100) / 30
-                val scaledProgress3 = if (progress3 == 1) 0 else (progress3 * 100) / 30
-                val scaledProgress4 = if (progress4 == 1) 0 else (progress4 * 100) / 30
-                val scaledProgress5 = if (progress5 == 1) 0 else (progress5 * 100) / 30
-                val scaledProgress6 = if (progress6 == 1) 0 else (progress6 * 100) / 30
-                val scaledProgress7 = if (progress7 == 1) 0 else (progress7 * 100) / 30
+                // Function to handle scaling and display logic
+                fun setProgress(
+                    progress: Int,
+                    progressBar: ProgressBar,
+                    dayText: TextView,
+                    progressText: TextView
+                ) {
+                    if (progress == 31) {
+                        // If progress is 31, show finished and 100%
+                        progressBar.progress = 100
+                        dayText.text = "Finished"
+                        progressText.text = "100%"
+                    } else {
+                        // Otherwise, scale progress and display normally
+                        val scaledProgress = if (progress == 1) 0 else (progress * 100) / 30
+                        progressBar.progress = scaledProgress
+                        dayText.text = "Day: $progress"
+                        progressText.text = "$scaledProgress%"
+                    }
+                }
 
-                // Binding values to UI components
-                binding.progress1.progress = scaledProgress1
-                binding.day1.text = "Day: $progress1"
-                binding.progress1txt.text = "$scaledProgress1%"
-
-                binding.progress2.progress = scaledProgress2
-                binding.day2.text = "Day: $progress2"
-                binding.progress2txt.text = "$scaledProgress2%"
-
-                binding.progress3.progress = scaledProgress3
-                binding.day3.text = "Day: $progress3"
-                binding.progress3txt.text = "$scaledProgress3%"
-
-                binding.progress4.progress = scaledProgress4
-                binding.day4.text = "Day: $progress4"
-                binding.progress4txt.text = "$scaledProgress4%"
-
-                binding.progress5.progress = scaledProgress5
-                binding.day5.text = "Day: $progress5"
-                binding.progress5txt.text = "$scaledProgress5%"
-
-                binding.progress6.progress = scaledProgress6
-                binding.day6.text = "Day: $progress6"
-                binding.progress6txt.text = "$scaledProgress6%"
-
-                binding.progress7.progress = scaledProgress7
-                binding.day7.text = "Day: $progress7"
-                binding.progress7txt.text = "$scaledProgress7%"
+                // Apply the function to all progress levels
+                setProgress(progress1, binding.progress1, binding.day1, binding.progress1txt)
+                setProgress(progress2, binding.progress2, binding.day2, binding.progress2txt)
+                setProgress(progress3, binding.progress3, binding.day3, binding.progress3txt)
+                setProgress(progress4, binding.progress4, binding.day4, binding.progress4txt)
+                setProgress(progress5, binding.progress5, binding.day5, binding.progress5txt)
+                setProgress(progress6, binding.progress6, binding.day6, binding.progress6txt)
+                setProgress(progress7, binding.progress7, binding.day7, binding.progress7txt)
             }
         }
+
 
         binding.cardSprint100m.setOnClickListener {
             loadingDialog = DialogUtils.showLoading(requireActivity())

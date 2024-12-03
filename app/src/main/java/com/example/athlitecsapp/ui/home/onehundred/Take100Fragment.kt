@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -89,7 +90,16 @@ class Take100Fragment : Fragment() {
         // Add video items.
 
         currentPosition = savedInstanceState?.getInt("CURRENT_VIDEO_INDEX") ?: getCurrentPositionFromPrefs()
-
+        binding.btnSkip.setOnClickListener {
+            try {
+                day++
+                signUpviewModel.updateLevel1(day)
+                findNavController().navigateUp()
+            } catch (e: Exception) {
+                e.printStackTrace() // Logs the exception to the console for debugging
+                Toast.makeText(requireContext(), "Error updating level: ${e.message}", Toast.LENGTH_SHORT).show() // Show error message to user
+            }
+        }
         binding.backArrow.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -297,31 +307,31 @@ class Take100Fragment : Fragment() {
                         R.drawable.backplank,
                         "Arm Power  -  Back Plank ",
                         getDescriptionByLevel3(level!!),
-                        R.raw.ss
+                        R.raw.backplank
                     ),
                     VideoItem(
                         R.drawable.imgaw,
                         "Arm Power  - Side Plank ",
                         getDescriptionByLevel3(level!!),
-                        R.raw.ss
+                        R.raw.sideplank
                     ),
                     VideoItem(
                         R.drawable.kneepushup,
                         "Arm Power  -  Knee Push-Up ",
                         getDescriptionByLevel3(level!!),
-                        R.raw.ss
+                        R.raw.kneepushup
                     ),
                     VideoItem(
                         R.drawable.arm,
                         "Arm Power  -  Push-Up Full  ",
                         getDescriptionByLevel3(level!!),
-                        R.raw.ss
+                        R.raw.pushupfull
                     ),
                     VideoItem(
                         R.drawable.plank,
                         "Arm Power  -  Superman Plank  ",
                         getDescriptionByLevel3(level!!),
-                        R.raw.ss
+                        R.raw.plank
                     ),
                     VideoItem(
                         R.drawable.cooldown,
@@ -329,7 +339,6 @@ class Take100Fragment : Fragment() {
                         "(Static stretching, 10-15 counts each) ",
                         R.raw.cooldown
                     ),
-
                     )
             )
             Log.d("sss", day.toString())
@@ -412,14 +421,12 @@ class Take100Fragment : Fragment() {
 
         // Only start timer for position 1 and if not already running
         if (position == 1 && !isTimerRunning) {
+
             Log.d("Take100Fragment", "Starting countdown timer for position 1")
             startCountdownTimer()
         } else if (position == 14 && !isTimerRunning) {
             Log.d("Take100Fragment", "Starting countdown timer for position 1")
             startCountdownTimer()
-        } else if (position == 28) {
-            DialogUtils.showSuccessMessage(requireActivity(), "Success", "Day $day Completed!")
-            signUpviewModel.updateLevel5(day++)
         }
 
         // Update the current position and scroll the RecyclerView to it
@@ -457,9 +464,17 @@ class Take100Fragment : Fragment() {
         loadingDialog = DialogUtils.showLoading(requireActivity())
         loadingDialog.show()
 
-        // Delay the dismissal for 2 seconds after showing the progress dialog
+        // Delay the dismissal for 5 seconds after showing the progress dialog
         binding.recyclerViewTiniklingList.postDelayed({
             loadingDialog.dismiss()
+
+            // Check if the current position is 27 and show a toast
+            if (currentPosition == 27) {
+                DialogUtils.showSuccessMessage(requireActivity(), "Success", "Day $day Completed!")
+                day++
+                addLevel(day)
+            }
+
             if (currentPosition + 1 < videoList.size) {
                 currentPosition++
                 saveCurrentPositionToPrefs()
@@ -471,8 +486,18 @@ class Take100Fragment : Fragment() {
                 }
             }
         }, 5000)
-
     }
+
+    private fun addLevel(day: Int) {
+        try {
+            signUpviewModel.updateLevel1(day)
+            findNavController().navigateUp()
+        } catch (e: Exception) {
+            e.printStackTrace() // Logs the exception to the console for debugging
+            Toast.makeText(requireContext(), "Error updating level: ${e.message}", Toast.LENGTH_SHORT).show() // Show error message to user
+        }
+    }
+
 
     private fun initializePlayer(videoResId: Int) {
         try {
