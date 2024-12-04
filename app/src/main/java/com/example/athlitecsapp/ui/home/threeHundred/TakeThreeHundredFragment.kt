@@ -78,36 +78,46 @@ class TakeThreeHundredFragment : Fragment() {
                                 "Day: ${bundle.getInt("day")}, Level: ${bundle.getString("level")}"
                             )
 
+                            // Check if the progress for level 3 is 31 or more
                             if (status.level3DayProgress >= 31) {
-                                val bundles = Bundle().apply {
+                                val resetBundle = Bundle().apply {
                                     putInt("day", 1)
                                     putString("level", level)
                                     putString("scope", "300m")
                                 }
+
+                                // Show reset confirmation dialog
                                 DialogUtils.showWarningMessage(
                                     activity = requireActivity(),
                                     title = "Confirmation",
                                     content = "Do you want to take this activity again? All progress will be reset!",
-                                    confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
-                                        // Reset the progress to the start
+                                    confirmListener = SweetAlertDialog.OnSweetClickListener { resetDialog ->
+                                        // Reset the progress to day 1
                                         viewModel.updateLevel3(1)
-                                        findNavController().navigate(R.id.threeHundredListsFragment, bundles)
+                                        findNavController().navigate(R.id.threeHundredListsFragment, resetBundle)
+                                        // Dismiss both dialogs after navigation
+                                        resetDialog.dismissWithAnimation()
                                         dialog.dismissWithAnimation()
                                     }
                                 ).setCancelText("No")
-                                    .setCancelClickListener { dialog ->
-                                        dialog.dismissWithAnimation()
+                                    .setCancelClickListener { resetDialog ->
+                                        // Dismiss reset dialog if "No" is clicked
+                                        resetDialog.dismissWithAnimation()
                                     }.show()
                             } else {
+                                // Navigate if progress is less than 31
                                 findNavController().navigate(R.id.threeHundredListsFragment, bundle)
+                                // Dismiss the initial dialog
                                 dialog.dismissWithAnimation()
                             }
                         }
                     ).setCancelText("No")
                         .setCancelClickListener { dialog ->
+                            // Dismiss the initial dialog if "No" is clicked
                             dialog.dismissWithAnimation()
                         }.show()
                 }
+
             } else {
                 Log.d("ListOf100Fragment", "Status is null")
             }

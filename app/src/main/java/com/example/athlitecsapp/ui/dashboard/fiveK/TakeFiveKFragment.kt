@@ -81,36 +81,46 @@ class TakeFiveKFragment : Fragment() {
                                 "Day: ${bundle.getInt("day")}, Level: ${bundle.getString("level")}"
                             )
 
+                            // Check if progress is 31 or more (indicating completion)
                             if (status.level4DayProgress >= 31) {
-                                val bundles = Bundle().apply {
+                                val resetBundle = Bundle().apply {
                                     putInt("day", 1)
                                     putString("level", level)
                                     putString("scope", "5000m")
                                 }
+
+                                // Show reset confirmation dialog
                                 DialogUtils.showWarningMessage(
                                     activity = requireActivity(),
                                     title = "Confirmation",
                                     content = "Do you want to take this activity again? All progress will be reset!",
-                                    confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
-                                        // Reset the progress to the start
+                                    confirmListener = SweetAlertDialog.OnSweetClickListener { resetDialog ->
+                                        // Reset progress and navigate to the reset activity
                                         viewModel.updateLevel4(1)
-                                        findNavController().navigate(R.id.listsTakeFiveKFragment, bundles)
+                                        findNavController().navigate(R.id.listsTakeFiveKFragment, resetBundle)
+                                        // Dismiss both dialogs
+                                        resetDialog.dismissWithAnimation()
                                         dialog.dismissWithAnimation()
                                     }
                                 ).setCancelText("No")
-                                    .setCancelClickListener { dialog ->
-                                        dialog.dismissWithAnimation()
+                                    .setCancelClickListener { resetDialog ->
+                                        // Dismiss only the reset dialog if "No" is clicked
+                                        resetDialog.dismissWithAnimation()
                                     }.show()
                             } else {
+                                // If progress is less than 31, navigate directly without resetting progress
                                 findNavController().navigate(R.id.listsTakeFiveKFragment, bundle)
+                                // Dismiss the initial dialog
                                 dialog.dismissWithAnimation()
                             }
                         }
                     ).setCancelText("No")
                         .setCancelClickListener { dialog ->
+                            // Dismiss the initial dialog if "No" is clicked
                             dialog.dismissWithAnimation()
                         }.show()
                 }
+
             } else {
                 Log.d("ListOf100Fragment", "Status is null")
             }

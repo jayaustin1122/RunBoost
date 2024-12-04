@@ -91,25 +91,27 @@ class ListOf100Fragment : Fragment() {
                             )
 
                             if (status.level1DayProgress >= 31) {
-                                val bundles = Bundle().apply {
+                                val resetBundle = Bundle().apply {
                                     putInt("day", 1)
                                     putString("level", level)
                                     putString("scope", "100m")
                                 }
+
                                 DialogUtils.showWarningMessage(
                                     activity = requireActivity(),
                                     title = "Confirmation",
                                     content = "Do you want to take this activity again? All progress will be reset!",
-                                    confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
-                                        // Reset the progress to the start
+                                    confirmListener = SweetAlertDialog.OnSweetClickListener { resetDialog ->
                                         viewModel.updateLevel1(1)
-                                        findNavController().navigate(R.id.take100Fragment, bundles)
+                                        findNavController().navigate(R.id.take100Fragment, resetBundle)
+                                        resetDialog.dismissWithAnimation()
                                         dialog.dismissWithAnimation()
                                     }
                                 ).setCancelText("No")
-                                    .setCancelClickListener { dialog ->
-                                        dialog.dismissWithAnimation()
+                                    .setCancelClickListener { resetDialog ->
+                                        resetDialog.dismissWithAnimation()
                                     }.show()
+
                             } else {
                                 findNavController().navigate(R.id.take100Fragment, bundle)
                                 dialog.dismissWithAnimation()
@@ -120,6 +122,7 @@ class ListOf100Fragment : Fragment() {
                             dialog.dismissWithAnimation()
                         }.show()
                 }
+
             } else {
                 Log.d("ListOf100Fragment", "Status is null")
             }
