@@ -3,7 +3,9 @@ package com.example.athlitecsapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.athlitecsapp.R
 import com.example.athlitecsapp.databinding.ItemTiniklingBinding
 import com.example.athlitecsapp.model.Routine
 
@@ -17,7 +19,9 @@ class RoutineAdapter(
         fun bind(tinikling: Routine) {
             binding.textViewTitle.text = tinikling.title
             binding.textViewShortDesc.text = tinikling.description
-
+            binding.card.setBackgroundColor(
+                ContextCompat.getColor(binding.root.context, R.color.white)
+            )
             binding.root.setOnClickListener {
                 onItemClick(tinikling, position)
             }

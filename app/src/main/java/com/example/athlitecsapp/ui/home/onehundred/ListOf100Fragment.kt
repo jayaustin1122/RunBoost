@@ -31,10 +31,8 @@ class ListOf100Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListOf100Binding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
-
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,59 +40,79 @@ class ListOf100Fragment : Fragment() {
         sharedViewModel = requireActivity().run {
             androidx.lifecycle.ViewModelProvider(this)[SharedViewModel::class.java]
         }
+
         viewModel.getAllStatus()
+
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
         viewModel.statusLiveData.observe(viewLifecycleOwner) { status ->
             if (status != null) {
                 Log.d("ListOf100Fragment", "Status received: $status")
                 val progress = status.level1DayProgress
                 binding.workoutProgressBar.progress = progress
-                if (progress >= 31){
+
+                if (progress >= 31) {
                     binding.workoutProgressBar.progress = 100
                     binding.dayDisplay.text = "Finished"
-                }
-                else{
+                    binding.btnStart.text = "Take Again?"
+
+                } else {
                     val scaledProgress1 = if (progress == 1) 0 else (progress * 100) / 30
                     binding.dayDisplay.text = "Day ${progress}"
                     binding.workoutProgressBar.progress = scaledProgress1
                 }
+
                 val (level, day) = when (progress) {
                     in 0..10 -> "BEGINNER" to progress
                     in 11..20 -> "INTERMEDIATE" to progress
                     in 21..30 -> "EXPERT" to progress
-                    else -> "UNKNOWN" to 0 // Fallback
+                    else -> "UNKNOWN" to 0
                 }
 
                 binding.btnStart.setOnClickListener {
                     Log.d("ListOf100Fragment", "Card clicked!")
 
-                    // Use SweetAlertDialog for confirmation
                     DialogUtils.showWarningMessage(
                         activity = requireActivity(),
                         title = "Confirmation",
-                        content = "Do you want to take this activity? Once started, it cannot be stopped!",
-                        confirmListener = SweetAlertDialog.OnSweetClickListener {
-                            // Pass arguments using a Bundle
+                        content = "Do you want to start this activity? Once started, it cannot be stopped!",
+                        confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
                             val bundle = Bundle().apply {
                                 putInt("day", status.level1DayProgress)
                                 putString("level", level)
                                 putString("scope", "100m")
                             }
 
-                            // Log the bundle values
                             Log.d(
                                 "BundleContent",
                                 "Day: ${bundle.getInt("day")}, Level: ${bundle.getString("level")}"
                             )
 
-                            if(status.level1DayProgress >= 31){
-                                DialogUtils.showSuccessMessage(requireActivity(),"You Have Completed All The Activities","Congratulations")
-                            }
-                            else{
+                            if (status.level1DayProgress >= 31) {
+                                val bundles = Bundle().apply {
+                                    putInt("day", 1)
+                                    putString("level", level)
+                                    putString("scope", "100m")
+                                }
+                                DialogUtils.showWarningMessage(
+                                    activity = requireActivity(),
+                                    title = "Confirmation",
+                                    content = "Do you want to take this activity again? All progress will be reset!",
+                                    confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
+                                        // Reset the progress to the start
+                                        viewModel.updateLevel1(1)
+                                        findNavController().navigate(R.id.take100Fragment, bundles)
+                                        dialog.dismissWithAnimation()
+                                    }
+                                ).setCancelText("No")
+                                    .setCancelClickListener { dialog ->
+                                        dialog.dismissWithAnimation()
+                                    }.show()
+                            } else {
                                 findNavController().navigate(R.id.take100Fragment, bundle)
-                                it.dismissWithAnimation()
+                                dialog.dismissWithAnimation()
                             }
                         }
                     ).setCancelText("No")

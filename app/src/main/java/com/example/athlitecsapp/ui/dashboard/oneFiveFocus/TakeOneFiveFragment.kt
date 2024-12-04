@@ -46,6 +46,7 @@ class TakeOneFiveFragment : Fragment() {
                 if (progress >= 31){
                     binding.workoutProgressBar.progress = 100
                     binding.dayDisplay.text = "Finished"
+                    binding.btnStart.text = "Take Again?"
                 }
                 else{
                     val scaledProgress1 = if (progress == 1) 0 else (progress * 100) / 30
@@ -62,30 +63,45 @@ class TakeOneFiveFragment : Fragment() {
                 binding.btnStart.setOnClickListener {
                     Log.d("ListOf100Fragment", "Card clicked!")
 
-                    // Use SweetAlertDialog for confirmation
                     DialogUtils.showWarningMessage(
                         activity = requireActivity(),
                         title = "Confirmation",
-                        content = "Do you want to take this activity? Once started, it cannot be stopped!",
-                        confirmListener = SweetAlertDialog.OnSweetClickListener {
-                            // Pass arguments using a Bundle
+                        content = "Do you want to start this activity? Once started, it cannot be stopped!",
+                        confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
                             val bundle = Bundle().apply {
                                 putInt("day", status.level7DayProgress)
                                 putString("level", level)
                                 putString("scope", "1500m")
                             }
 
-                            // Log the bundle values
                             Log.d(
                                 "BundleContent",
                                 "Day: ${bundle.getInt("day")}, Level: ${bundle.getString("level")}"
                             )
-                            if(status.level7DayProgress >= 31){
-                                DialogUtils.showSuccessMessage(requireActivity(),"You Have Completed All The Activities","Congratulations")
-                            }
-                            else{
+
+                            if (status.level7DayProgress >= 31) {
+                                val bundles = Bundle().apply {
+                                    putInt("day", 1)
+                                    putString("level", level)
+                                    putString("scope", "1500m")
+                                }
+                                DialogUtils.showWarningMessage(
+                                    activity = requireActivity(),
+                                    title = "Confirmation",
+                                    content = "Do you want to take this activity again? All progress will be reset!",
+                                    confirmListener = SweetAlertDialog.OnSweetClickListener { dialog ->
+                                        // Reset the progress to the start
+                                        viewModel.updateLevel7(1)
+                                        findNavController().navigate(R.id.listsOneFiveFragment, bundles)
+                                        dialog.dismissWithAnimation()
+                                    }
+                                ).setCancelText("No")
+                                    .setCancelClickListener { dialog ->
+                                        dialog.dismissWithAnimation()
+                                    }.show()
+                            } else {
                                 findNavController().navigate(R.id.listsOneFiveFragment, bundle)
-                                it.dismissWithAnimation()
+                                dialog.dismissWithAnimation()
                             }
                         }
                     ).setCancelText("No")
